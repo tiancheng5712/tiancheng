@@ -19,6 +19,8 @@ public class ProductServiceImpl implements ProductService {
 		product.setName("MiBook");
 		product.setDescription("MiBook write code is very cool!");
 		product.setPrice(4999.0d);
+		product.setAddress("ÖÐ¹ú");
+		product.setNeed("yes");
 		add(product);
 	}
 
@@ -29,11 +31,22 @@ public class ProductServiceImpl implements ProductService {
 		products.put(newid, product);
 		return product;
 	}
-
+	@Override
+	public void del(Long id){
+		products.remove(id);
+	}
 	@Override
 	public Product get(long id) {
 		// TODO Auto-generated method stub
 		return products.get(id);
 	}
+	@Override
+	public Map<Long, Product> getProductMap() {
+		return products;
+	}
 	
+	public Product Change(Product product) {
+		products.put(product.getId(), product);
+		return product;
+	}
 }

@@ -10,10 +10,14 @@
 	<div id="global">
 		<h4>The product has been saved!</h4>
 		<h5>Details:</h5>
-		Tips:${message}<br /> Product ID:${product.id}<br /> Product
-		Name:${product.name}<br /> 
+		Tips:${message}<br />
+		 Product ID:${product.id}<br /> 
+		 Product Name:${product.name}<br /> 
 		Description:${product.description}<br />
 		Price:${product.price}<br />
+		Address:${product.address}<br/>
+		Need:${product.need}<br/>
 	</div>
+		<a href="http://localhost:8080/SpringMvc4.3-Start/product_viewProducts.action">显示资料</a>
 </body>
 </html>

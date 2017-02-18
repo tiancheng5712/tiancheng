@@ -1,5 +1,8 @@
 package com.hp.springmvc.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,10 +38,17 @@ public class ProductController {
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
+	product.setAddress(productForm.getAddress());
+	product.setNeed(productForm.getNeed());
 	//add product
 	Product saveProduct= productService.add(product);
 	redirectAttributes.addFlashAttribute("message", "The product was sucessfully added!");
 	return "redirect:/product_view/"+saveProduct.getId()+".action";
+	}
+	@RequestMapping(value="/product_change")
+	public String Change(Product product){
+		productService.Change(product);
+		return "redirect:/product_viewProducts.action";
 	}
 	@RequestMapping(value="/product_view/{id}")
 	public String viewProduct(@PathVariable Long id,Model model){
@@ -46,10 +56,29 @@ public class ProductController {
 		model.addAttribute("product", product);
 		return "ProductView";
 	}
+	
+	@RequestMapping(value="/product_viewProducts")
+	public String viewProductMap(Model model) {
+		Map<Long, Product> products=new HashMap<Long,Product>();
+		products=productService.getProductMap();
+		model.addAttribute("products", products);
+		return "ProductViewList";
+	}
 	@RequestMapping(value="/product_retrieve")
 	public String sendProduct(@RequestParam Long id,Model model){
 		Product product =productService.get(id);
 		model.addAttribute("product", product);
 		return "ProductView";
+	}
+	@RequestMapping(value="/product_changeProduct")
+	public String changeProduct(@RequestParam Long id, Model model){
+		Product product =productService.get(id);
+		model.addAttribute("product",product);
+		return "ProductChange";
+	}
+	@RequestMapping(value="/product_del")
+	public String delProduct(@RequestParam Long id) {
+		productService.del(id);
+		return "redirect:/product_viewProducts.action";
 	}
 }
